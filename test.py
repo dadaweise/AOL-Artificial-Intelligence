@@ -1,5 +1,1 @@
-print("emel?")
-print("bimbimbambam")
-print("lorem ipsum")
-print("")
-
+import tensorflow as tf
