@@ -30,8 +30,8 @@ pip install -r requirements.txt
 ```
 
 HARUSNYA NANTI FILENYA
-results/
-└── skin_model_v2_fix_23.keras <-- File model eksperimental VGG16
+<br>results/
+<br>└── skin_model_v2_fix_23.keras <-- File model eksperimental VGG16
 
 ABIS ITU MASUK KE app.py TERUS DI TERMINAL VSCODE
 ```
