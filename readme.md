@@ -42,3 +42,16 @@ TERUS KE CHROME/EDGE/browser pilihan n di link nya tulis
 http://127.0.0.1:8000/frontend
 ```
 TERUS bebas sih upload aja image yang di folder testimg
+
+## peratiin kalau error berikut
+Error: "uvicorn is not recognized"
+Virtual environment kamu sepertinya belum aktif. Kembali ke Langkah 2 dan jalankan perintah aktivasinya.
+
+Error: "Directory 'static' does not exist"
+Kamu menjalankan perintah dari luar folder proyek. Pastikan kamu sudah melakukan cd AOL-Artificial-Intelligence terlebih dahulu.
+
+Website Muncul Pesan "Failed to connect to the API"
+Kamu membuka file index.html langsung dengan cara klik dua kali (URL di atas bertuliskan file:///...). Ingat, kamu harus membukanya lewat alamat server: http://127.0.0.1:8000/frontend.
+
+Error: "ImportError: DLL load failed" (Khusus Pengguna Windows)
+Jika TensorFlow gagal dimuat di Windows, kamu mungkin perlu menginstal Microsoft Visual C++ Redistributable terlebih dahulu.
