@@ -1,3 +1,0 @@
-https://www.kaggle.com/datasets/shubhamgoel27/dermnet
-
-https://www.kaggle.com/code/khaledelbhnasy/skin-detection-acc-98
