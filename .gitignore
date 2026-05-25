@@ -1,0 +1,17 @@
+myenv/
+.vscode/
+__pycache__/
+results/
+.venv_gpu/
+.venv/
+*.keras
+*.h5
+__pycache__/
+Data/
+node_modules/
+dist/
+build/
+.env
+.env.local
+.DS_Store
+Thumbs.db
