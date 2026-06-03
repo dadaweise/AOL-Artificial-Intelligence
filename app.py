@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 # import tf_keras as keras
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from PIL import Image
@@ -27,6 +28,15 @@ async def lifespan(app: FastAPI):# --- Startup ---
     ml_models.clear()
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # For production, replace with your precise frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount("/frontend", StaticFiles(directory="static", html=True), name="static")
 def prepare_image(image_bytes):
     """Resizes and formats the image EXACTLY how VGG16 expects it."""

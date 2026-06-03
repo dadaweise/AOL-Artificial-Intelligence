@@ -2,12 +2,18 @@ import { useState } from 'react';
 import { X, Settings as SettingsIcon, FolderOpen } from 'lucide-react';
 
 interface SettingsModalProps {
+  initialConfidence: number; // <-- NEW
   onClose: () => void;
+  onSave: (confidence: number) => void; // <-- NEW
 }
 
-export function SettingsModal({ onClose }: SettingsModalProps) {
+export function SettingsModal({ initialConfidence, onClose, onSave }: SettingsModalProps) {
   const [modelPath, setModelPath] = useState('/models/skinspectra_v1.h5');
-  const [confidence, setConfidence] = useState(75);
+  const [confidence, setConfidence] = useState(initialConfidence); // <-- Initialize with state
+
+  const handleSave = () => {
+    onSave(confidence); // Emit value upwards on click
+  };
 
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50">
@@ -27,9 +33,9 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
         </div>
 
         <div className="space-y-6">
+          {/* TensorFlow Model Block */}
           <div className="bg-[#f7fafc] rounded-2xl p-6 border-2 border-[#e2e8f0]">
             <h3 className="text-lg mb-4 text-[#1a365d]">TensorFlow Model</h3>
-
             <label className="block mb-2 text-[#4a5568]">Model Path</label>
             <div className="flex gap-2">
               <input
@@ -44,15 +50,14 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
                 Browse
               </button>
             </div>
-
             <p className="text-[#718096] text-sm mt-2">
               Load your local TensorFlow model for skin condition detection
             </p>
           </div>
 
+          {/* Detection Settings Block */}
           <div className="bg-[#f7fafc] rounded-2xl p-6 border-2 border-[#e2e8f0]">
             <h3 className="text-lg mb-4 text-[#1a365d]">Detection Settings</h3>
-
             <label className="block mb-2 text-[#4a5568]">
               Confidence Threshold: <span className="text-[#1a365d] font-medium">{confidence}%</span>
             </label>
@@ -81,8 +86,7 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
 
           <div className="bg-[#fff8e1] border-2 border-[#ffd4a3] rounded-2xl p-4">
             <p className="text-[#2d3748] text-sm">
-              <strong className="text-[#1a365d]">Tech Demo Mode:</strong> These settings are for demonstration purposes.
-              In production, model configuration should be managed by trained professionals.
+              <strong className="text-[#1a365d]">Tech Demo Mode:</strong> These settings are for demonstration purposes. In production, model configuration should be managed by trained professionals.
             </p>
           </div>
 
@@ -94,7 +98,7 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
               Cancel
             </button>
             <button
-              onClick={onClose}
+              onClick={handleSave} // <-- CALL HANDLER
               className="flex-1 bg-[#ffd4e5] hover:bg-[#ffc0da] text-[#2d3748] px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl"
             >
               Save Settings

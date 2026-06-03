@@ -1,74 +1,97 @@
-import { useState } from 'react';
-import { WelcomeScreen } from './components/WelcomeScreen';
-import { ScanningScreen } from './components/ScanningScreen';
-import { ResultsScreen } from './components/ResultsScreen';
-import { ErrorModal } from './components/ErrorModal';
-import { SettingsModal } from './components/SettingsModal';
+import { useState } from "react";
+import { WelcomeScreen } from "./components/WelcomeScreen";
+import { ScanningScreen } from "./components/ScanningScreen";
+import { ResultsScreen } from "./components/ResultsScreen";
+import { ErrorModal } from "./components/ErrorModal";
+import { SettingsModal } from "./components/SettingsModal";
 
-type Screen = 'welcome' | 'scanning' | 'results';
+type Screen = "welcome" | "scanning" | "results";
+
+interface PredictionResult {
+	condition: string;
+	confidence: number;
+}
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState<Screen>('welcome');
-  const [capturedImage, setCapturedImage] = useState<string>('');
-  const [showError, setShowError] = useState<string | null>(null);
-  const [showSettings, setShowSettings] = useState(false);
+	const [currentScreen, setCurrentScreen] = useState<Screen>("welcome");
+	const [capturedImage, setCapturedImage] = useState<string>("");
+	const [predictions, setPredictions] = useState<PredictionResult[]>([]);
+	const [showError, setShowError] = useState<string | null>(null);
+	const [showSettings, setShowSettings] = useState(false);
+	const [confidenceThreshold, setConfidenceThreshold] = useState<number>(25);
 
-  const handleStartScan = () => {
-    setCurrentScreen('scanning');
-  };
+	const handleStartScan = () => {
+		setCurrentScreen("scanning");
+	};
 
-  const handleCapture = (imageUrl: string) => {
-    setCapturedImage(imageUrl);
-    setCurrentScreen('results');
-  };
+	const handleCapture = (
+		imageUrl: string,
+		backendResults: PredictionResult[],
+	) => {
+		setCapturedImage(imageUrl);
+		setPredictions(backendResults);
+		setCurrentScreen("results");
+	};
 
-  const handleError = (errorType: string) => {
-    setShowError(errorType);
-  };
+	const handleError = (errorType: string) => {
+		setShowError(errorType);
+	};
 
-  const handleStartOver = () => {
-    setCapturedImage('');
-    setCurrentScreen('welcome');
-  };
+	const handleStartOver = () => {
+		setCapturedImage("");
+		setPredictions([]);
+		setCurrentScreen("welcome");
+	};
 
-  const handleTryAgain = () => {
-    setShowError(null);
-  };
+	const handleTryAgain = () => {
+		setShowError(null);
+	};
 
-  return (
-    <div className="min-h-screen">
-      {currentScreen === 'welcome' && (
-        <WelcomeScreen
-          onStartScan={handleStartScan}
-          onOpenSettings={() => setShowSettings(true)}
-        />
-      )}
+	return (
+		<div className="min-h-screen">
+			{currentScreen === "welcome" && (
+				<WelcomeScreen
+					onStartScan={handleStartScan}
+					onOpenSettings={() => setShowSettings(true)}
+				/>
+			)}
 
-      {currentScreen === 'scanning' && (
-        <ScanningScreen
-          onBack={() => setCurrentScreen('welcome')}
-          onCapture={handleCapture}
-          onError={handleError}
-        />
-      )}
+			{currentScreen === "scanning" && (
+				<ScanningScreen
+					onBack={() => setCurrentScreen("welcome")}
+					onCapture={handleCapture}
+					onError={handleError}
+				/>
+			)}
 
-      {currentScreen === 'results' && (
-        <ResultsScreen
-          imageUrl={capturedImage}
-          onBack={() => setCurrentScreen('scanning')}
-          onStartOver={handleStartOver}
-        />
-      )}
+			{currentScreen === "results" && (
+				<ResultsScreen
+					imageUrl={capturedImage}
+					apiResults={predictions}
+					confidenceThreshold={confidenceThreshold} // <-- PASS THRESHOLD DOWN
+					onBack={() => setCurrentScreen("scanning")}
+					onStartOver={handleStartOver}
+				/>
+			)}
 
-      {showError && (
-        <ErrorModal
-          errorType={showError}
-          onClose={() => setShowError(null)}
-          onTryAgain={handleTryAgain}
-        />
-      )}
+			{showError && (
+				<ErrorModal
+					errorType={showError}
+					onClose={() => setShowError(null)}
+					onTryAgain={handleTryAgain}
+				/>
+			)}
 
-      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
-    </div>
-  );
+			{showSettings && (
+				<SettingsModal
+					initialConfidence={confidenceThreshold}
+					onClose={() => setShowSettings(false)}
+					onSave={(newValue) => {
+						setConfidenceThreshold(newValue);
+						setShowSettings(false);
+					}}
+				/>
+			)}
+		</div>
+	);
 }
