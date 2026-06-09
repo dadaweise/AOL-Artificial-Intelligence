@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):# --- Startup ---
     ml_models["vgg_base"] = tf.keras.applications.VGG16(weights='imagenet', include_top=False, input_shape=(160, 160, 3))
     
     print("Loading Custom Skin Model...")
-    ml_models["skin_model"] = tf.keras.models.load_model(r"results\skin_model_v2_fix_23.keras")
+    ml_models["skin_model"] = tf.keras.models.load_model("results/skin_model_v2_fix_23.keras")
     
     print("All models loaded successfully!")
     yield

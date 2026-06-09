@@ -90,7 +90,7 @@ export function ScanningScreen({
 			formData.append("file", blob, "webcam_snapshot.jpg");
 
 			try {
-				const res = await fetch("http://localhost:8000/predict", {
+				const res = await fetch("https://daweise-skinspectra-api.hf.space/predict", {
 					method: "POST",
 					body: formData,
 				});
@@ -127,7 +127,7 @@ export function ScanningScreen({
 			try {
 				// 2. Network transmission to your local model container
 				const apiResponse = await fetch(
-					"http://localhost:8000/predict",
+					"https://daweise-skinspectra-api.hf.space/predict",
 					{
 						method: "POST",
 						body: formData,

@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI):
     # --- Startup ---
     print("Loading TensorFlow model...")
     # Point this to the FOLDER containing saved_model.pb, not the file itself# Keras 3 method for loading legacy SavedModels for inference
-    ml_models["skin_model"] = keras.models.load_model(r"results\my_model")
+    ml_models["skin_model"] = keras.models.load_model("results/my_model")
     print("Model loaded successfully!")
     yield
     ml_models.clear()
@@ -32,7 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/frontend", StaticFiles(directory="static", html=True), name="static")
+# app.mount("/frontend", StaticFiles(directory="static", html=True), name="static")
 
 def prepare_image(image_bytes):
     """Resizes and formats the image for the TensorFlow model."""
