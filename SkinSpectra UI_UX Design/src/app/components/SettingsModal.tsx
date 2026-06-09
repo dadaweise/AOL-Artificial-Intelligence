@@ -9,7 +9,7 @@ interface SettingsModalProps {
 
 export function SettingsModal({ initialConfidence, onClose, onSave }: SettingsModalProps) {
   const [modelPath, setModelPath] = useState('/models/skinspectra_v1.h5');
-  const [confidence, setConfidence] = useState(initialConfidence); // <-- Initialize with state
+  const [confidence, setConfidence] = useState(70); // <-- Initialize with state
 
   const handleSave = () => {
     onSave(confidence); // Emit value upwards on click
