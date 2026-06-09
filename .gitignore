@@ -8,5 +8,10 @@ results/
 *.h5
 __pycache__/
 Data/
-# Jika file model .keras terlalu besar (di atas 100MB), sebaiknya jangan di-push
-#skin_model_v2_fix_23.keras
+node_modules/
+dist/
+build/
+.env
+.env.local
+.DS_Store
+Thumbs.db
