@@ -56,7 +56,7 @@ export function SettingsModal({ initialConfidence, onClose, onSave }: SettingsMo
           </div>
 
           {/* Detection Settings Block */}
-          <div className="bg-[#f7fafc] rounded-2xl p-6 border-2 border-[#e2e8f0]">
+          {/* <div className="bg-[#f7fafc] rounded-2xl p-6 border-2 border-[#e2e8f0]">
             <h3 className="text-lg mb-4 text-[#1a365d]">Detection Settings</h3>
             <label className="block mb-2 text-[#4a5568]">
               Confidence Threshold: <span className="text-[#1a365d] font-medium">{confidence}%</span>
@@ -82,7 +82,7 @@ export function SettingsModal({ initialConfidence, onClose, onSave }: SettingsMo
             <p className="text-[#718096] text-sm mt-3">
               Adjust the minimum confidence level required for detection alerts
             </p>
-          </div>
+          </div> */}
 
           <div className="bg-[#fff8e1] border-2 border-[#ffd4a3] rounded-2xl p-4">
             <p className="text-[#2d3748] text-sm">
