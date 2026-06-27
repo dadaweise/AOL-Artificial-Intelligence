@@ -32,7 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/frontend", StaticFiles(directory="static", html=True), name="static")
+# app.mount("/frontend", StaticFiles(directory="static", html=True), name="static")
 
 def prepare_image(image_bytes):
     """Resizes and formats the image for the TensorFlow model."""
