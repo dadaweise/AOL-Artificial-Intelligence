@@ -14,9 +14,7 @@ ml_models = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # --- Startup ---
     print("Loading TensorFlow model...")
-    # Point this to the FOLDER containing saved_model.pb, not the file itself# Keras 3 method for loading legacy SavedModels for inference
     ml_models["skin_model"] = keras.models.load_model("results/my_model")
     print("Model loaded successfully!")
     yield
@@ -26,7 +24,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # For production, replace with your precise frontend URL
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

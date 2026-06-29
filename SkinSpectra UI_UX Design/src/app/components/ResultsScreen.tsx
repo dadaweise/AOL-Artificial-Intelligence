@@ -28,23 +28,19 @@ export function ResultsScreen({
     onStartOver,
 }: ResultsScreenProps) {
     
-    // 1. Find the absolute highest confidence score in the current batch
     const maxConfidence = apiResults && apiResults.length > 0 
         ? Math.max(...apiResults.map(r => r.confidence)) 
         : 0;
 
-    // 2. Map results purely based on the confidence threshold
     const results = (apiResults && apiResults.length > 0 ? apiResults : []).map(
         (item) => {
             const isHighConfidence = item.confidence >= confidenceThreshold;
             
-            // Check if this specific item is BOTH above threshold AND the highest score
             const isHighestSurpassing = isHighConfidence && item.confidence === maxConfidence;
 
             return {
                 condition: item.condition,
                 confidence: item.confidence,
-                // High confidence = Green up arrow, Low confidence = Gray down arrow
                 color: isHighConfidence ? "#48bb78" : "#a0aec0", 
                 icon: isHighConfidence ? ArrowUpCircle : ArrowDownCircle,
                 isHighestSurpassing: isHighestSurpassing,
@@ -52,7 +48,6 @@ export function ResultsScreen({
         },
     );
 
-    // 3. Flag attention box if ANY issue is >= the threshold
     const needsAttention = results.some((r) => r.confidence >= confidenceThreshold);
 
     return (
@@ -99,7 +94,6 @@ export function ResultsScreen({
                                 {results.map((result) => {
                                     const Icon = result.icon;
                                     
-                                    // Apply dynamic scaling/styling if it's the highest surpassing result
                                     const containerClasses = result.isHighestSurpassing 
                                         ? "space-y-3 p-4 bg-[#f0fdf4] rounded-2xl border-2 border-[#48bb78] transform scale-105 shadow-md transition-all" 
                                         : "space-y-2 p-2";

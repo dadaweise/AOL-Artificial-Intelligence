@@ -68,7 +68,7 @@ export default function App() {
 				<ResultsScreen
 					imageUrl={capturedImage}
 					apiResults={predictions}
-					confidenceThreshold={confidenceThreshold} // <-- PASS THRESHOLD DOWN
+					confidenceThreshold={confidenceThreshold}
 					onBack={() => setCurrentScreen("scanning")}
 					onStartOver={handleStartOver}
 				/>

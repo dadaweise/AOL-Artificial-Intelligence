@@ -46,7 +46,6 @@ export function ScanningScreen({
 				});
 				streamRef.current = stream;
 
-				// Now videoRef.current is guaranteed to exist!
 				if (videoRef.current) {
 					videoRef.current.srcObject = stream;
 					setStreamActive(true);
@@ -66,7 +65,6 @@ export function ScanningScreen({
 		};
 	}, []);
 
-	// Action: Snipe current frame matrix inside video box container element
 	const handleCapture = async () => {
 		if (!videoRef.current || !canvasRef.current) return;
 
@@ -75,11 +73,9 @@ export function ScanningScreen({
 		const ctx = canvas.getContext("2d");
 
 		if (ctx) {
-			// Set fixed resolution parameters mirroring pipeline sizes
 			canvas.width = 300;
 			canvas.height = 300;
 
-			// Draw frame snap snapshot onto invisible canvas layout workspace
 			ctx.drawImage(video, 0, 0, 300, 300);
 			const dataUrl = canvas.toDataURL("image/jpeg");
 
@@ -119,13 +115,11 @@ export function ScanningScreen({
 			setIsProcessing(true);
 			setCapturedImage(imageUrl);
 
-			// 1. Wrap the local image data into standard multipart format
 			const formData = new FormData();
 			const blob = dataURLtoBlob(imageUrl);
 			formData.append("file", blob, file.name);
 
 			try {
-				// 2. Network transmission to your local model container
 				const apiResponse = await fetch(
 					"http://127.0.0.1:8000/predict",
 					{
@@ -138,7 +132,6 @@ export function ScanningScreen({
 
 				const data = await apiResponse.json();
 
-				// 3. Complete step, passing the results array to App.tsx
 				onCapture(imageUrl, data.results);
 			} catch (err) {
 				console.error(err);

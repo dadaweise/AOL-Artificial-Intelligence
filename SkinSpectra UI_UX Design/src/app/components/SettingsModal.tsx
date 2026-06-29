@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { X, Settings as SettingsIcon, FolderOpen } from 'lucide-react';
 
 interface SettingsModalProps {
-  initialConfidence: number; // <-- NEW
+  initialConfidence: number;
   onClose: () => void;
-  onSave: (confidence: number) => void; // <-- NEW
+  onSave: (confidence: number) => void; 
 }
 
 export function SettingsModal({ initialConfidence, onClose, onSave }: SettingsModalProps) {
   const [modelPath, setModelPath] = useState('/models/skinspectra_v1.h5');
-  const [confidence, setConfidence] = useState(70); // <-- Initialize with state
+  const [confidence, setConfidence] = useState(70);
 
   const handleSave = () => {
-    onSave(confidence); // Emit value upwards on click
+    onSave(confidence);
   };
 
   return (
@@ -98,7 +98,7 @@ export function SettingsModal({ initialConfidence, onClose, onSave }: SettingsMo
               Cancel
             </button>
             <button
-              onClick={handleSave} // <-- CALL HANDLER
+              onClick={handleSave}
               className="flex-1 bg-[#ffd4e5] hover:bg-[#ffc0da] text-[#2d3748] px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl"
             >
               Save Settings
